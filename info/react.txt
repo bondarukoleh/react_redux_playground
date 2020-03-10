@@ -44,3 +44,9 @@ stateless. They pass to the component as attributes. this.props used only for re
 <React.Fragment> {/* Comment inside jsx */} </React.Fragment>;
 
 We can easily build page with objects. Like making a long list of paragraphs from array of objects.
+const newsTemplate = this.props.news.map((item, index) => {
+    return <div key={index}> <p className="news_text">{item.text}</p> </div>;
+  });
+
+key={index} - we need key to set unique if to the element. Index is not a best choice, better use element id, or
+some hash.
