@@ -1,0 +1,46 @@
+====================================
+Overall:
+React killer feature - that it managing virtual DOM, making all changes with components in virtual DOM, and after that
+makes all changes in one operations with real DOM, which makes it very fast.
+
+React using the jsx syntax, it gives ability to write a "html" markup (which is jsx markup) in .js files.
+To render component from jsx - we should name and call it from capital. ReactDOM.render(<App />, $('#root'))
+to ReactDOM.render(<h1>Hello world</h1>... became ReactDOM.render(React.createElement('h1', null, 'Hello world')...
+we are using babel, babel makes from jsx markup language - javascript.
+
+====================================
+Codding:
+React is a library, not a framework, so we can plugin react as a simple <script> to our document like
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script> - react
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script> - react-dom
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script> - babel
+
+After we plugin react - we can use ReactDOM global variable.
+ReactDOM.render(<h1>Hello world</h1>, document.getElementById('root'))
+ReactDOM.render gets React Component as an argument and DOM-element as element where we want to mount our component.
+
+ReactDOM.render(<h1>Hello world</h1>, document.getElementById('root'));
+ReactDOM.render(React.createElement('h1', null, 'Привет, Мир!'), document.getElementById('root'));
+If we trying to mount two components to one element - last one will appear.
+
+We can create element from function let App = () => <p>Simple Component</p> and with class
+class ComponentFromClass extends React.Component {render(){return (<p>Simple Component</p>)}}
+If component created with class - jsx should be putted inside return statement of render "method"
+
+Components created with class - stateful components, with a state, components created with functions - stateless, means
+doesn't have a state.
+
+ReactDOM.render(<h1 className="redColor">Hello world</h1>, $('#root'));
+Since we writing not html but jsx, and we in .js file - we cannot use html's class="redColor", it's a reserved word, so
+we using jsx className.
+
+Each component should return ONE NODE! we cannot return from render(){return (<a/> <p/>)}, we should do:
+ return (<div><a/> <p/></div>)
+Another way to do that is add multiple components in <React.Fragment> and return it.
+
+Each component has properties, they stored in this.props in stateful components, and first argument of the function in
+stateless. They pass to the component as attributes. this.props used only for reading.
+
+<React.Fragment> {/* Comment inside jsx */} </React.Fragment>;
+
+We can easily build page with objects. Like making a long list of paragraphs from array of objects.
