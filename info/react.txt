@@ -50,3 +50,40 @@ const newsTemplate = this.props.news.map((item, index) => {
 
 key={index} - we need key to set unique if to the element. Index is not a best choice, better use element id, or
 some hash.
+
+We can decide to return an element like here:
+return (<div>{newsAvailable ? <p>News</p> : null}</div>);
+
+Or choose a style for the element with template string:
+return (<div>{someElement} <p className={`neededClass ${newsAvailable ? '' : 'optional class'}}>News</p></div>);
+
+Additional methods in React Components we can type like:
+renderNews = () => {} -> context isn't lost, we still have access to this.props
+renderNews() {}
+
+PropTypes
+This is a library for validating component properties. Kind like Joi for mongoose.
+MyComponent.propTypes = {optionalArray: PropTypes.array.isRequired}
+Note: Doesn't work with production build version, it's only for development, because validation - is a heavy
+operation.
+
+MyComponent.propTypes = {
+propTypes: {
+optionalProperty: PropTypes.array, .bool, .func, .number, .object, .string, .symbol,
+optionalUnion: PropTypes.oneOfType([ PropTypes.string, PropTypes.number, PropTypes.instanceOf(Message)])
+optionalObjectWithShape: PropTypes.shape({ color: PropTypes.string.isRequired, fontSize: PropTypes.number})
+requiredFunc: React.PropTypes.func.isRequired,
+requiredAny: React.PropTypes.any.isRequired,
+}
+
+State
+Available only in stateful component.
+To work with state-depended properties we should set the "initial state" to them. To do this we should implement the
+"state" property. Always change state via this.setState method.
+class Article extends React.Component {
+    state = {myState: 'initial'}
+    handleEvent(e){this.setState({myState: 'changed'})}
+}
+
+JSX syntax supports a lot of events listeners that you can add to the components.
+<a href="#" onClick={this.handleReadMoreClick}>Read more...</a>

@@ -8,16 +8,56 @@
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
     <title>React</title>
     <style>
+        body {
+            background: rgba(0, 102, 255, 0.38);
+            font-family: sans-serif;
+        }
+
+        p {
+            margin: 0 0 5px;
+        }
+
+        .article {
+            background: #FFF;
+            border: 1px solid rgba(0, 89, 181, 0.82);
+            width: 600px;
+            margin: 0 0 5px;
+            box-shadow: 2px 2px 5px -1px rgb(0, 81, 202);
+            padding: 3px 5px;
+        }
+
         .red {
             color: #ff0000;
         }
+
         .news_author {
-            color: cornflowerblue;
+            text-decoration: underline;
+            color: #007DDC;
         }
-        .news_text {
-            color: indigo;
+
+        .news_header {
+
+        }
+
+        .news_count {
+            margin: 10px 0 0 0;
+            display: block;
+        }
+
+        .news_readmore {
+
+        }
+
+        .news {
+            border: solid 1px;
+            width: fit-content;
+        }
+
+        .none {
+            display: none;
         }
     </style>
 </head>
@@ -27,44 +67,100 @@
   const myNews = [
     {
       id: 1,
-      author: 'Саша Печкин',
-      text: 'В четверг, четвертого числа...'
+      author: 'John Doe',
+      header: 'Something happened on Thursday the 4th of March...',
+      text: 'A Very scary story with murder in your neighborhood, please pay respect the police and aware of criminals.'
     },
     {
       id: 2,
-      author: 'Просто Вася',
-      text: '$ cost is too high'
+      author: 'John Smith',
+      header: 'The CoronaVirus is a shitty crap',
+      text: `A Story about virus, sick people, and in the end hope that science will beat this shit, and everybody will
+        be healed`
     },
     {
       id: 3,
-      author: 'Max Frontend',
-      text: 'Прошло 2 года с прошлых учебников'
+      author: 'Guest',
+      header: 'Hi guys, just want to share with you my success story...',
+      text: 'Story about how someone achieved some doubtful success, by accident, and now he boasts how cool he is.'
     },
     {
       id: 4,
-      author: 'Гость',
-      text: 'Бесплатно. Без смс, про реакт'
-    }
+      author: 'Ad',
+      header: 'To find a girlfriend, earn a pile of money and make bigger your em..., just try this...',
+      text: 'Crap about some super pills that makes you a superman, but in fact just an expensive placebo.'
+    },
   ];
 
-  class News extends React.Component {
+  class Article extends React.Component {
+    state = {
+      textShown: false
+    };
+
+    handleReadMoreClick = (e) => {
+      const {textShown} = this.state;
+      // if (textShown) {
+      //
+      // }
+      e.preventDefault();
+      this.setState({textShown: true})
+    };
+
     render() {
-      const newsTemplate = this.props.news.map(({id, author, text}) => {
-        return <div key={id}>
+      const {textShown} = this.state;
+      const {id, author, header, text} = this.props.articleData;
+      return (
+        <div id={id} className="article">
           <p className="news_author">{author}:</p>
-          <p className="news_text">{text}</p>
-        </div>;
-      });
-      return (<div className="news">{newsTemplate}</div>);
+          <p className="news_header">{header}</p>
+          {!textShown && <a href="#" className="news_readmore" onClick={this.handleReadMoreClick}>Read more...</a>}
+          {textShown && <p className="news_text">{text}</p>}
+        </div>
+      );
     }
   }
 
-  const Comments = () => <div className="red">Comments component</div>;
+  Article.propTypes = {
+    articleData: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      author: PropTypes.string.isRequired,
+      header: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired
+    })
+  };
+
+  class News extends React.Component {
+    renderNews = () => {
+      const newsAvailable = !!this.props.news.length;
+      let newsTemplate = [];
+      if (newsAvailable) {
+        newsTemplate = this.props.news.map((item) => <Article key={item.id} articleData={item}/>);
+      } else {
+        newsTemplate = <p>No news for today!</p>;
+      }
+      return newsTemplate;
+    };
+
+    renderNewsCount() {
+      return this.props.news.length && <p className='news_count red'><strong>News count is: {this.props.news.length}</strong></p>
+    }
+
+    render() {
+      return (<div className="news">
+        {this.renderNews()}
+        {this.renderNewsCount()}
+      </div>);
+    }
+  }
+
+  News.propTypes = {
+    news: PropTypes.array.isRequired
+  };
 
   class Main extends React.Component {
     render() {
       return (
-        <p> Main component </p>
+        <h3> News </h3>
       );
     }
   }
@@ -75,7 +171,6 @@
         <React.Fragment>
           <Main/> {/*JSX comment*/}
           <News news={myNews}/>
-          <Comments/>
         </React.Fragment>
       );
     }
