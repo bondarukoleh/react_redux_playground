@@ -90,6 +90,13 @@ You cannot call setSate() inside render() - recursion will occur.
 render - is a pretty heavy operation so try to run it less times.
 If parent component re-rendered - all children re-rendered also.
 
+Be careful with setState({prop: this.state.prop}), setState - doesn't change the state immediately, it adds change event
+in queue. If you want to reference some value after method fires, it can return previous (past) value.
+For example setState({prop: this.state.prop++}) - will never work properly, initial value of prop is 0.
+We insert event "change state to {prop: 0}" in queue.
+Postponement worked, prop became 1.
+change event fired prop is back to 0 again. That's it.
+
 JSX syntax supports a lot of events listeners that you can add to the components.
 <a href="#" onClick={this.handleReadMoreClick}>Read more...</a>
 event handlers should be done only with arrow function, otherwise context is lost. handleReadMoreClick = (e) => {}

@@ -151,8 +151,7 @@
     };
 
     handleTotalClick = (e) => {
-      const {clicksOnTotal} = this.state;
-      this.setState({clicksOnTotal: clicksOnTotal + 1})
+      this.setState({clicksOnTotal: ++this.state.clicksOnTotal})
     };
 
     renderNewsCount() {
