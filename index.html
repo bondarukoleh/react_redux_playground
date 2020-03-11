@@ -94,20 +94,24 @@
 
   class Article extends React.Component {
     state = {
-      textShown: false
+      textShown: false,
+      readLessShown: false
     };
 
     handleReadMoreClick = (e) => {
-      const {textShown} = this.state;
-      // if (textShown) {
-      //
-      // }
       e.preventDefault();
-      this.setState({textShown: true})
+      this.setState({textShown: true, readLessShown: true})
     };
 
+    handleReadLessClick = (e) => {
+      e.preventDefault();
+      this.setState({textShown: false, readLessShown: false})
+    };
+
+
     render() {
-      const {textShown} = this.state;
+      console.log('RENDER: %o', this);
+      const {textShown, readLessShown} = this.state;
       const {id, author, header, text} = this.props.articleData;
       return (
         <div id={id} className="article">
@@ -115,6 +119,7 @@
           <p className="news_header">{header}</p>
           {!textShown && <a href="#" className="news_readmore" onClick={this.handleReadMoreClick}>Read more...</a>}
           {textShown && <p className="news_text">{text}</p>}
+          {readLessShown && <a href="#" className="news_readless" onClick={this.handleReadLessClick}>Read less...</a>}
         </div>
       );
     }
@@ -130,7 +135,11 @@
   };
 
   class News extends React.Component {
-    renderNews = () => {
+    state = {
+      clicksOnTotal: 0
+    };
+
+    getNews = () => {
       const newsAvailable = !!this.props.news.length;
       let newsTemplate = [];
       if (newsAvailable) {
@@ -141,14 +150,27 @@
       return newsTemplate;
     };
 
+    handleTotalClick = (e) => {
+      const {clicksOnTotal} = this.state;
+      this.setState({clicksOnTotal: clicksOnTotal + 1})
+    };
+
     renderNewsCount() {
-      return this.props.news.length && <p className='news_count red'><strong>News count is: {this.props.news.length}</strong></p>
+      return this.props.news.length && <p className='news_count red' onClick={this.handleTotalClick}>
+        <strong>News count is: {this.props.news.length}</strong></p>
+    }
+
+    renderClicksCount() {
+      const {clicksOnTotal} = this.state;
+      return this.props.news.length && <p className='news_count red' onClick={this.handleTotalClick}>
+        <strong>Clicks count: {clicksOnTotal}</strong></p>
     }
 
     render() {
       return (<div className="news">
-        {this.renderNews()}
+        {this.getNews()}
         {this.renderNewsCount()}
+        {this.renderClicksCount()}
       </div>);
     }
   }

@@ -82,8 +82,14 @@ To work with state-depended properties we should set the "initial state" to them
 "state" property. Always change state via this.setState method.
 class Article extends React.Component {
     state = {myState: 'initial'}
-    handleEvent(e){this.setState({myState: 'changed'})}
+    handleEvent(e){this.setState({myState: 'changed'}, [() => {/*optional callback or list of callbacks to do stuff
+    after state change*/})]}
 }
+When you changing the state of component - it involves render method of the component which state was changed.
+You cannot call setSate() inside render() - recursion will occur.
+render - is a pretty heavy operation so try to run it less times.
+If parent component re-rendered - all children re-rendered also.
 
 JSX syntax supports a lot of events listeners that you can add to the components.
 <a href="#" onClick={this.handleReadMoreClick}>Read more...</a>
+event handlers should be done only with arrow function, otherwise context is lost. handleReadMoreClick = (e) => {}
