@@ -59,7 +59,9 @@ return (<div>{someElement} <p className={`neededClass ${newsAvailable ? '' : 'op
 
 Additional methods in React Components we can type like:
 renderNews = () => {} -> context isn't lost, we still have access to this.props
-renderNews() {}
+renderNews() {} - context lost, React does something with functions - so context lost in this way. To make regular
+function declaration work - we need to bind them in constructor of component.
+constructor () {this.renderNews = this.renderNews.bind(this)} - looks like shit, but unfortunately no choice.
 
 PropTypes
 This is a library for validating component properties. Kind like Joi for mongoose.
@@ -76,15 +78,20 @@ requiredFunc: React.PropTypes.func.isRequired,
 requiredAny: React.PropTypes.any.isRequired,
 }
 
+====================================
 State
 Available only in stateful component.
 To work with state-depended properties we should set the "initial state" to them. To do this we should implement the
-"state" property. Always change state via this.setState method.
+"state" property. Always change state via this.setState method. Reading this.state after setState() - not a good idea,
+because of a queue, you can get state before your previous state change actually fired, better do actions in setState
+callback - it will fire after setState fired.
 class Article extends React.Component {
     state = {myState: 'initial'}
     handleEvent(e){this.setState({myState: 'changed'}, [() => {/*optional callback or list of callbacks to do stuff
     after state change*/})]}
 }
+or even
+this.setState((state, props) => {counter: state.counter + props.step});
 When you changing the state of component - it involves render method of the component which state was changed.
 You cannot call setSate() inside render() - recursion will occur.
 render - is a pretty heavy operation so try to run it less times.
@@ -100,3 +107,29 @@ change event fired prop is back to 0 again. That's it.
 JSX syntax supports a lot of events listeners that you can add to the components.
 <a href="#" onClick={this.handleReadMoreClick}>Read more...</a>
 event handlers should be done only with arrow function, otherwise context is lost. handleReadMoreClick = (e) => {}
+
+event.target vs event.currentTarget
+If you have onClick on div with paragraph inside. And User clicks on paragraph:
+e.target === paragraph, the element which caused the event, on what event was born, which user interacted with.
+e.currentTarget === div, the element that has handler function registered, which handler was attached to.
+
+Uncontrolled vs controlled component
+Controlled - form, input, textarea, select elements usually has their own state, and update depends on user input. This
+ doesn't work with logic of components state in React. To make that work in React style - we should delegate to React
+ state all changes made by user in those components, so we're like don't allow those elements make their changes by
+ themselves, only with our know, and only via state of the component. Elements with their "own" state, that fully
+ controlled by React component state called em... controlled.
+
+Uncontrolled component means it has no event/change state handlers, means it doesn't have explicit calls to setState
+in front of controlled component.
+You need to create reference in Component constructor
+constructor(props) {
+      super(props);
+      this.input = React.createRef()
+    }
+Than you should set reference to some element via "refs" attribute to get the value of uncontrolled.
+<input ref={this.input} defaultValue="Some value..."></input>
+And now you can get a value of this input
+handleSomeButtonClickFromSameWithInputComponent = (e) => alert(this.input.current.value);
+
+To set initial value for uncontrolled component "defaultValue" can be used.

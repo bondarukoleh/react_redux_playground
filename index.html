@@ -59,6 +59,9 @@
         .none {
             display: none;
         }
+        .text-input {
+            margin: 0 5px 5px 0;
+        }
     </style>
 </head>
 <body>
@@ -100,26 +103,31 @@
 
     handleReadMoreClick = (e) => {
       e.preventDefault();
-      this.setState({textShown: true, readLessShown: true})
+      this.setState({textShown: true, readLessShown: true});
     };
 
     handleReadLessClick = (e) => {
       e.preventDefault();
-      this.setState({textShown: false, readLessShown: false})
+      this.setState({textShown: false, readLessShown: false});
     };
 
 
     render() {
-      console.log('RENDER: %o', this);
       const {textShown, readLessShown} = this.state;
       const {id, author, header, text} = this.props.articleData;
       return (
         <div id={id} className="article">
           <p className="news_author">{author}:</p>
           <p className="news_header">{header}</p>
-          {!textShown && <a href="#" className="news_readmore" onClick={this.handleReadMoreClick}>Read more...</a>}
+          {!textShown && <a href="#"
+                            className="news_readmore"
+                            onClick={this.handleReadMoreClick}>
+            Read more...</a>}
           {textShown && <p className="news_text">{text}</p>}
-          {readLessShown && <a href="#" className="news_readless" onClick={this.handleReadLessClick}>Read less...</a>}
+          {readLessShown && <a href="#"
+                               className="news_readless"
+                               onClick={this.handleReadLessClick}>
+            Read less...</a>}
         </div>
       );
     }
@@ -150,26 +158,15 @@
       return newsTemplate;
     };
 
-    handleTotalClick = (e) => {
-      this.setState({clicksOnTotal: ++this.state.clicksOnTotal})
-    };
-
     renderNewsCount() {
       return this.props.news.length && <p className='news_count red' onClick={this.handleTotalClick}>
-        <strong>News count is: {this.props.news.length}</strong></p>
-    }
-
-    renderClicksCount() {
-      const {clicksOnTotal} = this.state;
-      return this.props.news.length && <p className='news_count red' onClick={this.handleTotalClick}>
-        <strong>Clicks count: {clicksOnTotal}</strong></p>
+        <strong>News count is: {this.props.news.length}</strong></p>;
     }
 
     render() {
       return (<div className="news">
         {this.getNews()}
         {this.renderNewsCount()}
-        {this.renderClicksCount()}
       </div>);
     }
   }
@@ -186,11 +183,35 @@
     }
   }
 
+  class TextInput extends React.Component {
+    constructor(props) {
+      super(props);
+      this.input = React.createRef()
+    }
+
+    handleButtonClick = (e) => alert(this.input.current.value);
+
+    render() {
+      console.log('RENDERED INPUT %o', this);
+      return (
+        <div>
+          <input className="text-input"
+                 placeholder="Type message here..."
+                 defaultValue=''
+                 ref={this.input}
+                 id="text_input"></input>
+          <button onClick={this.handleButtonClick}>Click to get input value</button>
+        </div>
+      );
+    }
+  }
+
   class App extends React.Component {
     render() {
       return (
         <React.Fragment>
           <Main/> {/*JSX comment*/}
+          <TextInput/>
           <News news={myNews}/>
         </React.Fragment>
       );
