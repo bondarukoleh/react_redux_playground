@@ -144,7 +144,6 @@
       this.setState({textShown: false, readLessShown: false});
     };
 
-
     render() {
       const {textShown, readLessShown} = this.state;
       const {id, author, header, text} = this.props.articleData;
@@ -192,7 +191,7 @@
     };
 
     renderNewsCount() {
-      return this.props.news.length && <p className='news_count red' onClick={this.handleTotalClick}>
+      return this.props.news.length && <p className='news_count red'>
         <strong>News count is: {this.props.news.length}</strong></p>;
     }
 
@@ -208,24 +207,17 @@
     news: PropTypes.array.isRequired
   };
 
-  class Main extends React.Component {
-    render() {
-      return (
-        <h3> News </h3>
-      );
-    }
-  }
-
   class AddNews extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {authorText: '', areaText: '', checkBoxState: false};
+      this.state = {authorText: '', areaText: '', checkBoxState: false, headerText: ''};
     }
 
     handleSubmit = (e) => {
       e.preventDefault();
-      const {authorText, areaText} = this.state;
-      alert(`Author: "${authorText}", Text: "${areaText}"`);
+      const {authorText, areaText, headerText} = this.state;
+      this.props.onAddNews({id: Date.now(), authorText, areaText, headerText});
+      this.setState({authorText, areaText: '', headerText: ''})
     };
 
     handleTextChange = (e) => {
@@ -242,20 +234,25 @@
     validateForm = () => {
       return !(this.state.checkBoxState
         && this.state.areaText.trim().length > 0
+        && this.state.headerText.trim().length > 0
         && this.state.authorText.trim().length > 0);
     };
 
     render() {
       console.log('RENDERED INPUT %o', this);
+      const {authorText, areaText, headerText} = this.state;
       return (
         <form onSubmit={this.handleSubmit} className="add_news">
           <input className="add_author"
                  placeholder="News author..."
-                 defaultValue=''
                  id="authorText"
-                 onChange={this.handleTextChange}></input>
+                 onChange={this.handleTextChange} value={authorText}></input>
+          <input className="add_author"
+                 placeholder="News header..."
+                 id="headerText"
+                 onChange={this.handleTextChange} value={headerText}></input>
           <textarea className="add_news_text" placeholder="Type the text here..."
-                    id="areaText" onChange={this.handleTextChange}></textarea>
+                    id="areaText" onChange={this.handleTextChange} value={areaText}></textarea>
           <label className="agreement">
             I agree with rules:
             <input type="checkbox" onChange={this.handleCheckBoxChange} checked={this.state.checkBoxState}></input>
@@ -268,14 +265,26 @@
       );
     }
   }
+  AddNews.propTypes = {
+    onAddNews: PropTypes.func.isRequired
+  };
 
   class App extends React.Component {
+    state = {
+      news: myNews
+    };
+
+    handleAddNews = ({id, authorText, areaText, headerText}) => {
+      this.setState((state, props) => {
+        return {news: [...state.news, {id, author: authorText, text: areaText, header: headerText}]}
+      })
+    };
+
     render() {
       return (
         <React.Fragment>
-          <Main/> {/*JSX comment*/}
-          <AddNews/>
-          <News news={myNews}/>
+          <AddNews onAddNews={this.handleAddNews}/>
+          <News news={this.state.news}/>
         </React.Fragment>
       );
     }

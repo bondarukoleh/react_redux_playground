@@ -177,3 +177,6 @@ props
 state
 
 Pay attention on componentWillReceiveProps - deprecated, we should change it to getDerivedStateFromProps
+
+If we cannot pass some logic between parent and child, or because of two not connected components - we can use
+EventEmitter on the client side https://raw.githubusercontent.com/Olical/EventEmitter/master/EventEmitter.js
