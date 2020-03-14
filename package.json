@@ -4,7 +4,8 @@
   "description": "Learning react/redux.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "cd news_app && npm i --no-audit && cd .."
   },
   "repository": {
     "type": "git",
