@@ -59,8 +59,37 @@
         .none {
             display: none;
         }
+
         .text-input {
             margin: 0 5px 5px 0;
+        }
+
+        .add_news {
+            margin: 0 5px 5px 0;
+            width: 210px;
+            border: 1px dashed rgba(0, 89, 181, 0.82);
+            padding: 5px;
+        }
+        .add_author, .add_news_text, .add_new_news, .agreement {
+            display: block;
+            margin: 0 0 5px 0;
+            padding: 5px;
+            width: 94%;
+            border: 1px solid rgba(0, 89, 181, 0.82);
+        }
+        .agreement {
+            border: none;
+            font-size: 12px;
+        }
+        .add_new_news {
+            box-sizing: content-box;
+            color: #FFF;
+            text-transform: uppercase;
+            background: #007DDC;
+        }
+        .add_new_news:disabled {
+            background: #CCC;
+            color: #999;
         }
     </style>
 </head>
@@ -183,25 +212,48 @@
     }
   }
 
-  class TextInput extends React.Component {
+  class AddNews extends React.Component {
     constructor(props) {
       super(props);
-      this.input = React.createRef()
+      this.input = React.createRef();
+      this.textArea = React.createRef();
+      this.state = {checkBoxState: false}
     }
 
-    handleButtonClick = (e) => alert(this.input.current.value);
+    handleSubmit = (e) => {
+      e.preventDefault();
+      const author = this.input.current.value;
+      const news_text = this.textArea.current.value;
+      if(!this.state.checkBoxState){
+        alert(`You should agreed the agreement!`)
+      } else {
+        alert(`Author: "${author}", Text: "${news_text}"`);
+      }
+    };
+
+    handleCheckBoxChange = (e) => {
+      this.setState((state, props) => {
+        return {checkBoxState: !state.checkBoxState}
+      })
+    };
 
     render() {
       console.log('RENDERED INPUT %o', this);
       return (
-        <div>
-          <input className="text-input"
-                 placeholder="Type message here..."
+        <form onSubmit={this.handleSubmit} className="add_news">
+          <input className="add_author"
+                 placeholder="News author..."
                  defaultValue=''
                  ref={this.input}
                  id="text_input"></input>
-          <button onClick={this.handleButtonClick}>Click to get input value</button>
-        </div>
+          <textarea className="add_news_text" placeholder="Type the text here..." ref={this.textArea}
+                    id="news_text"></textarea>
+          <label className="agreement">
+            I agree with rules:
+            <input type="checkbox" checked={this.state.checkBoxState} onChange={this.handleCheckBoxChange}></input>
+          </label>
+          <button type="submit" className="add_new_news">Click to get news text</button>
+        </form>
       );
     }
   }
@@ -211,7 +263,7 @@
       return (
         <React.Fragment>
           <Main/> {/*JSX comment*/}
-          <TextInput/>
+          <AddNews/>
           <News news={myNews}/>
         </React.Fragment>
       );

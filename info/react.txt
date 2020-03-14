@@ -133,3 +133,47 @@ And now you can get a value of this input
 handleSomeButtonClickFromSameWithInputComponent = (e) => alert(this.input.current.value);
 
 To set initial value for uncontrolled component "defaultValue" can be used.
+
+Component lifecycle
+Every component has lifecycle, like component will be rendered, rendered, deleted etc.
+
+Mounting
+These methods are called in the following order when an instance of a component is being created and inserted into the
+DOM:
+constructor()
+static getDerivedStateFromProps()
+render()
+componentDidMount() - this is the place when component mounted to the DOM, and we have ability to use refs here, so if
+ we want to manage timeouts, ajax, and interaction with other libraries - this is the place where we should do so.
+
+Updating
+These methods are called in the following order when a component is being re-rendered:
+static getDerivedStateFromProps()
+shouldComponentUpdate()
+render()
+getSnapshotBeforeUpdate()
+componentDidUpdate()
+
+Unmounting
+This method is called when a component is being removed from the DOM:
+componentWillUnmount()
+
+Error Handling
+These methods are called when there is an error during rendering, in a lifecycle method, or in the constructor of
+any child component.
+static getDerivedStateFromError()
+componentDidCatch()
+
+Each component also provides some other APIs:
+setState()
+forceUpdate()
+
+Class Properties
+defaultProps
+displayName
+
+Instance Properties
+props
+state
+
+Pay attention on componentWillReceiveProps - deprecated, we should change it to getDerivedStateFromProps
