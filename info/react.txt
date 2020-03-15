@@ -148,7 +148,7 @@ componentDidMount() - this is the place when component mounted to the DOM, and w
 
 Updating
 These methods are called in the following order when a component is being re-rendered:
-static getDerivedStateFromProps()
+static getDerivedStateFromProps(newProps, state){return newState || null}
 shouldComponentUpdate()
 render()
 getSnapshotBeforeUpdate()
@@ -180,3 +180,13 @@ Pay attention on componentWillReceiveProps - deprecated, we should change it to 
 
 If we cannot pass some logic between parent and child, or because of two not connected components - we can use
 EventEmitter on the client side https://raw.githubusercontent.com/Olical/EventEmitter/master/EventEmitter.js
+
+We can import in react
+import A from 'A' - default import
+import {A} from 'A' - named import
+import * as A from 'A' - all in namespace A import
+
+Export
+export default A
+export const A
+export {A}
