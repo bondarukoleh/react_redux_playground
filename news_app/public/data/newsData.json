@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "author": "John Doe",
+    "header": "Something happened on Thursday the 4th of March...",
+    "text": "A Very scary story with murder in your neighborhood, please pay respect the police and aware of criminals."
+  },
+  {
+    "id": 2,
+    "author": "John Smith",
+    "header": "The CoronaVirus is a shitty crap",
+    "text": "A Story about virus, sick people, and in the end hope that science will beat this shit, and everybody will be healed"
+  },
+  {
+    "id": 3,
+    "author": "Guest",
+    "header": "Hi guys, just want to share with you my success story...",
+    "text": "Story about how someone achieved some doubtful success, by accident, and now he boasts how cool he is."
+  },
+  {
+    "id": 4,
+    "author": "Ad",
+    "header": "To find a girlfriend, earn a pile of money and make bigger your em..., just try this...",
+    "text": "Crap about some super pills that makes you a superman, but in fact just an expensive placebo."
+  },
+  {
+    "id": 5,
+    "author": "Advertising",
+    "header": "Suspicious news...",
+    "text": "spam spam spam"
+  }
+]
