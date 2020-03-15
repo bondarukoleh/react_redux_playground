@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "cd news_app && npm i --no-audit && cd .."
+    "preinstall": "cd react_bacic_course && npm i --no-audit && cd .."
   },
   "repository": {
     "type": "git",
