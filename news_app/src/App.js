@@ -8,24 +8,6 @@ class App extends React.Component {
     isLoading: false
   };
 
-  static getDerivedStateFromProps(props, state) {
-    console.log('getDerivedStateFromProps')
-    console.log(`state`, state);
-    let nextFilteredNews;
-    if (Array.isArray(state.news)) {
-      nextFilteredNews = [...state.news];
-      nextFilteredNews.forEach((item) => {
-        if (item.text.toLowerCase().indexOf('spam') !== -1) {
-          item.text = 'СПАМ';
-        }
-      });
-      return {
-        // aaa: nextFilteredNews,
-      };
-    }
-    return null;
-  }
-
   handleAddNews = ({id, authorText, areaText, headerText}) => {
     this.setState((state, props) => {
       return {news: [...state.news, {id, author: authorText, text: areaText, header: headerText}]};
@@ -49,7 +31,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log('RENDERING')
     const {news, isLoading} = this.state;
     return (
       <React.Fragment>

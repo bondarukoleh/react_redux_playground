@@ -3,27 +3,25 @@ import PropTypes from "prop-types";
 import {Article} from "./Article";
 
 class News extends React.Component {
-  // state = {spamLessNews: null};
-  //
-  // static getDerivedStateFromProps({news}, state) {
-  //   return {
-  //     spamLessNews: [...news].map((item) => {
-  //       if (item.text.toLocaleLowerCase().includes(`spam`)) {
-  //         item.text = 'THIS IS SPAM!!!';
-  //       }
-  //       return item;
-  //     })
-  //   };
-  // }
+  state = {spamLessNews: null};
+
+  static getDerivedStateFromProps({news}, state) {
+    return {
+      //TODO: news array with objects, we need deepClone here, this is a bad crutch
+      spamLessNews: JSON.parse(JSON.stringify(news)).map((item) => {
+        if (item.text.toLocaleLowerCase().includes(`spam`)) {
+          item.text = 'THIS IS SPAM!!!';
+        }
+        return item;
+      })
+    };
+  }
 
   getNews = () => {
-    // const {spamLessNews} = this.state;
-    const {news} = this.props;
+    const {spamLessNews} = this.state;
     let newsElement = null;
-    // if (!!spamLessNews.length) {
-    if (!!news.length) {
-      // newsElement = spamLessNews.map((item) => <Article key={item.id} articleData={item}/>);
-      newsElement = news.map((item) => <Article key={item.id} articleData={item}/>);
+    if (!!spamLessNews.length) {
+      newsElement = spamLessNews.map((item) => <Article key={item.id} articleData={item}/>);
     } else {
       newsElement = <p>No news for today!</p>;
     }
@@ -31,12 +29,9 @@ class News extends React.Component {
   };
 
   renderNewsCount() {
-    // const {spamLessNews} = this.state;
-    const {news} = this.props;
-    // return spamLessNews.length
-    return news.length
-      // ? <p className='news_count red'><strong>News count is: {spamLessNews.length}</strong></p>
-      ? <p className='news_count red'><strong>News count is: {news.length}</strong></p>
+    const {spamLessNews} = this.state;
+    return spamLessNews.length
+      ? <p className='news_count red'><strong>News count is: {spamLessNews.length}</strong></p>
       : null;
   }
 
