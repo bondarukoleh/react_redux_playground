@@ -1,0 +1,4 @@
+husky - pre-commit hooks library.
+lint-staged - gives ability to manage files that will be in commit
+in .eslintrc - we inherit eslint-config-prettier from external package, and react eslint from react. Also, we're adding
+a plugin eslint-plugin-prettier so there won't be conflicts between linters - prettier and eslint.

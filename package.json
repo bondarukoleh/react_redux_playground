@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "cd react_bacic_course && npm i --no-audit && cd .."
+    "preinstall": "cd react_bacic_course && npm i --no-audit && cd ..",
+    "postinstall": "cd redux_basic_course && npm i --no-audit && cd ..",
+    "start": "cd redux_basic_course && npm start"
   },
   "repository": {
     "type": "git",
@@ -17,5 +19,6 @@
   "bugs": {
     "url": "https://github.com/bondarukoleh/react_redux_playground/issues"
   },
-  "homepage": "https://github.com/bondarukoleh/react_redux_playground#readme"
+  "homepage": "https://github.com/bondarukoleh/react_redux_playground#readme",
+  "dependencies": {}
 }
