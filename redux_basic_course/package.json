@@ -20,15 +20,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "lint-staged",
     "eslint": "node_modules/.bin/eslint src/"
   },
-  "lint-staged": {
-    "*.{js, jsx}": [
-      "node_modules/.bin/eslint --max-warnings=0",
-      "prettier --write",
-      "git add"
-    ]
+  "husky": {
+    "hooks": {
+      "pre-commit": "node_modules/.bin/eslint src/ --max-warnings=0 && prettier --write && git add ."
+    }
   },
   "browserslist": {
     "production": [
