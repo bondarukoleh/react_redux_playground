@@ -21,7 +21,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "precommit": "lint-staged",
-    "lint": "node_modules/.bin/eslint src/"
+    "eslint": "node_modules/.bin/eslint src/"
   },
   "lint-staged": {
     "*.{js, jsx}": [
