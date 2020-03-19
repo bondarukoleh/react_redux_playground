@@ -62,4 +62,5 @@ Provider - all components inside it can access Store.
 
 To bind redux store with react components props - we need "connect" function. It connects react component with store,
 we describe what properties we need to get from store, and pass component we need to pass those properties. It returns
-<Connected(My_React_component)/> new component but with bounded props from store.
+<Connected(My_React_component)/> new component but with bounded props from store. Also after wrapping wrapped component
+has function dispatch in it's props.

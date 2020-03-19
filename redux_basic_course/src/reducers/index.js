@@ -1,8 +1,8 @@
-export const initialState = {
-  gitUser: 'User not logged in',
-};
+import { combineReducers } from 'redux';
+import { pageReducer } from './page';
+import { userReducer } from './user';
 
-export function rootReducer(state = initialState, action) {
-  // to implement
-  return state;
-}
+export const rootReducer = combineReducers({
+  page: pageReducer,
+  user: userReducer,
+});

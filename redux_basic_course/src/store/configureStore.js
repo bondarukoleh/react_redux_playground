@@ -1,4 +1,6 @@
 import { createStore } from 'redux';
-import { initialState, rootReducer } from '../reducers';
+import { rootReducer } from '../reducers';
 
-export const store = createStore(rootReducer, initialState);
+// initiate store will be combined from all reducers, so we don't need to
+// put it here
+export const store = createStore(rootReducer);
