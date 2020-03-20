@@ -1,5 +1,10 @@
 import { ActionTypes } from './actionTypes';
-import { setYearActionCreator } from './PageActions';
+import { getReposForActionCreator } from './PageActions';
+import { loginUserActionCreator, changedUserName } from './UserActions';
 
-export default { pageActions: { setYearActionCreator } };
+export default {
+  pageActions: { getReposForActionCreator },
+  userAction: { loginUserActionCreator, changedUserName },
+};
+
 export { ActionTypes };

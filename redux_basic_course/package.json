@@ -11,7 +11,9 @@
     "react-dom": "^16.13.0",
     "react-redux": "7.2.0",
     "react-scripts": "3.4.0",
-    "redux": "4.0.5"
+    "redux": "4.0.5",
+    "redux-logger": "3.0.6",
+    "redux-thunk": "2.3.0"
   },
   "devDependencies": {
     "eslint-config-prettier": "6.10.0",
@@ -29,7 +31,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run prettier && git add ."
+      "pre-commit": "npm run prettier && npm run lint && git add ."
     }
   },
   "browserslist": {

@@ -2,13 +2,19 @@ import { ActionTypes } from '../actions/actionTypes';
 
 const initialState = {
   year: 2018,
-  repositories: [],
+  repositories: null,
+  showLoader: false,
+  error: null,
 };
 
 export function pageReducer(state = initialState, action) {
   switch (action.type) {
-    case ActionTypes.setYear:
-      return { ...state, year: action.payload }; // this is where all components that subscribed for year - render
+    case ActionTypes.page.getRepositoriesRequest:
+      return { ...state, showLoader: action.payload, error: null };
+    case ActionTypes.page.getRepositoriesSuccess:
+      return { ...state, repositories: action.payload.repositories, year: action.payload.year, error: null };
+    case ActionTypes.page.getRepositoriesFail:
+      return { ...state, error: action.payload };
     default:
       return state;
   }
