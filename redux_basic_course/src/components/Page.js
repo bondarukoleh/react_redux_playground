@@ -7,13 +7,26 @@ export class Page extends Component {
     getReposFor({ user: gitUser.login, year: Number(e.currentTarget.innerText) });
   };
 
+  renderReposList(repositories) {
+    return (
+      <ol type="a">
+        {repositories.map(repoName => {
+          return <li key={Math.random()}>{repoName}</li>;
+        })}
+      </ol>
+    );
+  }
+
   showRepos = _ => {
     const { repositories, year, showLoader, error } = this.props;
     if (!showLoader && !error && repositories) {
       return (
-        <p>
-          You've got {repositories.length} repositories in {year} year.
-        </p>
+        <div>
+          <p>
+            You've got {repositories.length} repository(s) in {year} year.
+          </p>
+          {repositories.length && this.renderReposList(repositories)}
+        </div>
       );
     } else if (!showLoader && error) {
       return <p>Sorry we have an error. {error.errorMessage}</p>;

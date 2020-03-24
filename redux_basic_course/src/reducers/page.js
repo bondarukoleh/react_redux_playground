@@ -12,7 +12,7 @@ export function pageReducer(state = initialState, action) {
     case ActionTypes.page.getRepositoriesRequest:
       return { ...state, showLoader: action.payload, error: null };
     case ActionTypes.page.getRepositoriesSuccess:
-      return { ...state, repositories: action.payload.repositories, year: action.payload.year, error: null };
+      return { ...state, repositories: action.payload.repositories, year: action.payload.year };
     case ActionTypes.page.getRepositoriesFail:
       return { ...state, error: action.payload };
     default:
