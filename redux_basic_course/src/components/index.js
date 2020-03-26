@@ -1,4 +1,5 @@
-import { Page } from './Page';
-import { User } from './User';
+import { App } from './App';
+import { UserComponent } from './User';
+import { PageComponent } from './Page';
 
-export { Page, User };
+export { App, UserComponent, PageComponent };

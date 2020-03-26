@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export class Page extends Component {
+export class PageComponent extends Component {
   handleYearButton = e => {
     const { getReposFor, gitUser } = this.props;
     getReposFor({ user: gitUser.login, year: Number(e.currentTarget.innerText) });
@@ -9,11 +9,13 @@ export class Page extends Component {
 
   renderReposList(repositories) {
     return (
-      <ol type="a">
-        {repositories.map(repoName => {
-          return <li key={Math.random()}>{repoName}</li>;
-        })}
-      </ol>
+      <div className="repo">
+        <ol>
+          {repositories.map(repoName => {
+            return <li key={Math.random()}>{repoName}</li>;
+          })}
+        </ol>
+      </div>
     );
   }
 
@@ -29,26 +31,22 @@ export class Page extends Component {
         </div>
       );
     } else if (!showLoader && error) {
-      return <p>Sorry we have an error. {error.errorMessage}</p>;
+      return <p className="error">Sorry we have an error. {error.errorMessage}</p>;
     }
   };
 
   showYearsButtons = () => {
     const { showLoader } = this.props;
+    const years = [2017, 2018, 2019, 2020];
     return (
       <div>
-        <button className="btn" onClick={this.handleYearButton}>
-          2017
-        </button>
-        <button className="btn" onClick={this.handleYearButton}>
-          2018
-        </button>
-        <button className="btn" onClick={this.handleYearButton}>
-          2019
-        </button>
-        <button className="btn" onClick={this.handleYearButton}>
-          2020
-        </button>
+        {years.map(year => {
+          return (
+            <button key={year} className="btn" onClick={this.handleYearButton}>
+              {year}
+            </button>
+          );
+        })}
         {showLoader && <p>Loading your repositories...</p>}
       </div>
     );
@@ -66,7 +64,7 @@ export class Page extends Component {
   }
 }
 
-Page.protoTypes = {
+PageComponent.protoTypes = {
   repositories: PropTypes.array.isRequired,
   year: PropTypes.number.isRequired,
   getRepos: PropTypes.func.isRequired,
