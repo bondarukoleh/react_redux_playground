@@ -95,7 +95,11 @@ We can create like: \
 * *renderNews() {}* - `context lost`, React does something with functions - so context lost in this way. To make regular
    function declaration work - we need to bind them in constructor of component.
 ```jsx
-constructor () {this.renderNews = this.renderNews.bind(this)} // looks like shit, but unfortunately no choice.
+constructor () {this.renderNews = this.renderNews.bind(this)} // looks like shit
+// or
+toggleShowingPersons = function (e) {
+    this.setState({showPersons: !e.target.checked});
+}.bind(this) // still not very nice
 ```
 
 #### PropTypes validation library
