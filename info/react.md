@@ -44,7 +44,18 @@ class ComponentFromClass extends React.Component {
 ```
 If component `created with class` - `jsx` should be put `inside return statement of render method`. \
 Components created `with class - stateful components`, with a state, components created `with functions - stateless`,
-means doesn't have a state.
+means doesn't have a state. \
+After React 16.8 - and `useState()` hook - functional components also can have a state, so we cannot divide them by
+way the component was created anymore. \
+It's divided by purpose, if you need only presentation component - you should keep it dumb, if you need calculate a lot -
+use container, or stateful component. Restricting yourself of adding state everywhere - you make application logic more 
+clear, you know that all calculation and logic is lying in the containers, and all presentation logic divided from data
+is in the stateless components.
+
+|Class based |Functional Components|
+|:---|:---|
+|Access to `state` via `this`| Access to `useState()` via `state`|
+|Can use Lifecycle Hooks|Cannot use Lifecycle Hooks|
 
 #### className
 ```jsx
