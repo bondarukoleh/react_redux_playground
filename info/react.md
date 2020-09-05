@@ -178,7 +178,8 @@ If you have onClick on div with paragraph inside and User clicks on paragraph:
 e.target === paragraph, the element which caused the event, on what event was born, which user interacted with.
 e.currentTarget === div, the element that has handler function registered, which handler was attached to.
 
-#### Uncontrolled vs controlled component
+### Uncontrolled vs controlled component
+#### ref in class components
 `Controlled`- form, input, textarea, select elements usually has their `own state`, and update `depends on user input`.
 This `doesn't work with logic of components state in React`. To make that work in React style - we should delegate to
 React state all changes made by user in those components, so we're like don't allow those elements make their changes by
@@ -189,10 +190,15 @@ themselves, only with our know, and only via state of the component. `Elements w
 in front of controlled component. You need to *create reference* in *Component constructor* to have some information
 about uncontrolled component:
 ```jsx
+// Create ref in constructor
 constructor(props) {
-      super(props);
-      this.input = React.createRef(); // creating referense to some uncontrolled component
+      this.input = React.createRef(); // creating referense object, you can assign there any element you want at any 
+      // time and just use it.
     }
+/* Older way: This is automatically create the referense object, already assigned add it directly in some element */
+<input ref={(inputElem) => this.someInput = inputElem}> {/* this is accessible this.someInput for current component */}  
+{/* Or you can add some action directly to the lement.*/}
+<input ref={(inputElem) => inputElem.focus()}>
 ```
 Then you should set reference to some element via "refs" attribute to get the value of uncontrolled.
 ```jsx
@@ -203,6 +209,20 @@ So now from some other event handler we can get value of uncontrolled element:
 ```jsx
 <button onClick={(e) => alert(this.input.current.value);}></button>
 ```
+You can have `ref` attribute on every React component.
+
+#### ref in functional component
+Since in functional components you cannot use `React.createRef()`, there is hook that helps us `useRef()`
+```jsx
+/* Somewhere in the func component */
+const toggle = useRef(null);
+useEffect(() => {
+   /* componentDidMount */
+    toggle.current.click();
+  }, [])
+return <input ref={toggle} type='checkbox'/>;
+```
+
 
 #### Component lifecycle
 Every component has lifecycle, like component will be rendered, rendered, deleted etc.
