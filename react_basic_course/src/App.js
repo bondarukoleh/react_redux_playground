@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import {News, AddNews} from './components';
+import Blog from './containers/Blog/Blog';
 
 class App extends React.Component {
   state = {
@@ -38,6 +39,8 @@ class App extends React.Component {
         {isLoading && <p>Loading news...</p>}
         {Array.isArray(news) && <News news={news}/>}
         {this.renderError(news, isLoading)}
+        <hr/>
+        <Blog/>
       </React.Fragment>
     );
   }
