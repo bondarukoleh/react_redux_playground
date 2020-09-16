@@ -1,22 +1,42 @@
-import React, { Component } from 'react';
-
+import React, {Component} from 'react';
 import './FullPost.css';
+import axios from 'axios';
 
 class FullPost extends Component {
-    render () {
-        let post = <p>Please select a Post!</p>;
-        post = (
-            <div className="FullPost">
-                <h1>Title</h1>
-                <p>Content</p>
-                <div className="Edit">
-                    <button className="Delete">Delete</button>
-                </div>
-            </div>
+  state = {
+    postData: null
+  }
 
-        );
-        return post;
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(this.props.id !== prevProps.id) {
+      axios.get(`/posts/${this.props.id}`)
+        .then((result) => this.setState({postData: result.data}));
     }
+  }
+
+  deletePost = () => {
+    axios.delete(`/posts/${this.props.id}`)
+      .then((result) => console.log(result))
+  }
+
+  render() {
+    let post = <p style={{textAlign: "center"}}>Please select a Post!</p>;
+    if (this.props.id) {
+      post = <p style={{textAlign: "center"}}>Loading...</p>;
+    }
+    if (this.state.postData) {
+      post = (
+        <div className="FullPost">
+          <h1>{this.state.postData.title}</h1>
+          <p>{this.state.postData.body}</p>
+          <div className="Edit">
+            <button onClick={this.deletePost} className="Delete">Delete</button>
+          </div>
+        </div>
+      );
+    }
+    return post;
+  }
 }
 
 export default FullPost;

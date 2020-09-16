@@ -1,6 +1,6 @@
 .Posts {
-    display: flex;
-    flex-flow: row wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
     justify-content: center;
     width: 80%;
     margin: auto;

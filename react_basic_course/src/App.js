@@ -35,12 +35,12 @@ class App extends React.Component {
     const {news, isLoading} = this.state;
     return (
       <React.Fragment>
+        <Blog/>
+        <hr/>
         <AddNews onAddNews={this.handleAddNews}/>
         {isLoading && <p>Loading news...</p>}
         {Array.isArray(news) && <News news={news}/>}
         {this.renderError(news, isLoading)}
-        <hr/>
-        <Blog/>
       </React.Fragment>
     );
   }

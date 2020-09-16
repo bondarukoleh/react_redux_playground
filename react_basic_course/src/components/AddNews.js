@@ -11,7 +11,7 @@ class AddNews extends React.Component {
     e.preventDefault();
     const {authorText, areaText, headerText} = this.state;
     this.props.onAddNews({id: Date.now(), authorText, areaText, headerText});
-    this.setState({authorText, areaText: '', headerText: ''})
+    this.setState({authorText, areaText: '', headerText: ''});
   };
 
   handleTextChange = (e) => {
@@ -39,13 +39,13 @@ class AddNews extends React.Component {
         <input className="add_author"
                placeholder="News author..."
                id="authorText"
-               onChange={this.handleTextChange} value={authorText}></input>
+               onChange={this.handleTextChange} value={authorText}/>
         <input className="add_author"
                placeholder="News header..."
                id="headerText"
-               onChange={this.handleTextChange} value={headerText}></input>
+               onChange={this.handleTextChange} value={headerText}/>
         <textarea className="add_news_text" placeholder="Type the text here..."
-                  id="areaText" onChange={this.handleTextChange} value={areaText}></textarea>
+                  id="areaText" onChange={this.handleTextChange} value={areaText}/>
         <label className="agreement">
           I agree with rules:
           <input type="checkbox" onChange={this.handleCheckBoxChange} checked={this.state.checkBoxState}></input>
@@ -58,8 +58,9 @@ class AddNews extends React.Component {
     );
   }
 }
+
 AddNews.propTypes = {
   onAddNews: PropTypes.func.isRequired
 };
 
-export {AddNews}
+export {AddNews};
