@@ -26,7 +26,6 @@ class News extends Component {
       this.setState({isLoading: false});
       console.log(err);
     });
-    console.log('componentDidMount');
   }
 
   renderError(news, isLoading) {

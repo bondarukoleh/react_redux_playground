@@ -7,8 +7,8 @@ const setupAxios = () => {
   axios.defaults.headers.post['Content-Type'] = 'application/json'; // only for post requests
 
 // add middleware
-  const requestInterceptor = axios.interceptors.request.use((requestConfig) => {
-    console.log(requestConfig);
+//   const requestInterceptor = axios.interceptors.request.use((requestConfig) => {
+  axios.interceptors.request.use((requestConfig) => {
     return requestConfig;
   }, error => {
     console.log(`This is from request ERROR middleware: `, error);
@@ -24,7 +24,7 @@ const setupAxios = () => {
   });
 
   /* To create some specialized instance */
-  const someSpecialAxiosInstance = axios.create({baseURL: 'someUrl', headers: {['Content-Type']: 'text'}});
+  // const someSpecialAxiosInstance = axios.create({baseURL: 'someUrl', headers: {['Content-Type']: 'text'}});
 };
 
 export {setupAxios};
