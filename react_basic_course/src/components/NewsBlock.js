@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Article} from "./Article";
 
-class News extends React.Component {
+class NewsBlock extends React.Component {
   state = {spamLessNews: null};
 
   static getDerivedStateFromProps({news}, state) {
@@ -43,6 +43,6 @@ class News extends React.Component {
   }
 }
 
-News.propTypes = {news: PropTypes.array.isRequired};
+NewsBlock.propTypes = {news: PropTypes.array.isRequired};
 
-export {News};
+export {NewsBlock};

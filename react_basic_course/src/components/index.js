@@ -1,5 +1,5 @@
 import {AddNews} from './AddNews'
 import {Article} from './Article'
-import {News} from './News'
+import {NewsBlock} from './NewsBlock'
 
-export {AddNews, Article, News}
+export {AddNews, Article, NewsBlock}

@@ -1,0 +1,6 @@
+.Posts {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  width: 80%;
+  margin: auto;
+}

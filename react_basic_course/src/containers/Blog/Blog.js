@@ -1,44 +1,36 @@
 import React, {Component} from 'react';
-import Post from '../../components/Post/Post';
-import FullPost from '../../components/FullPost/FullPost';
-import NewPost from '../../components/NewPost/NewPost';
+import NewPost from './NewPost/NewPost';
 import './Blog.css';
-import axios from 'axios';
+import Posts from "./Posts/Posts";
+import FullPost from "./FullPost/FullPost";
+import {Route, Link} from 'react-router-dom';
+import News from "../News/News";
 
 class Blog extends Component {
   state = {
-    posts: [],
-    selectedPostId: ''
+    selectedPostId: null
   };
-
-  componentDidMount() {
-    axios.get('/posts')
-      .then((result) => {
-        const posts = result.data.slice(0, 4).map(post => ({...post, author: 'Oleh'}));
-        return this.setState({posts});
-      });
-  }
 
   postSelectedHandler = (id) => {
     this.setState({selectedPostId: id});
-  }
-
-  renderPosts = () => {
-    return this.state.posts.map(post => <Post key={post.id} title={post.title} author={post.author} clicked={() => this.postSelectedHandler(post.id)}/>);
   };
 
   render() {
     return (
-      <div style={{ backgroundColor: '#6d8cb0' }}>
-        <section className="Posts">
-          {this.renderPosts()}
-        </section>
-        <section>
-          <FullPost id={this.state.selectedPostId}/>
-        </section>
-        <section>
-          <NewPost/>
-        </section>
+      <div>
+        <header>
+          <nav>
+            <ul className={'Links'}>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/newPost">New Post</Link></li>
+              <li><Link to={{pathname: '/news'}}>News</Link></li>
+            </ul>
+          </nav>
+        </header>
+        <Route exact path={'/'} render={() => <Posts postClicked={this.postSelectedHandler}/>}/>
+        <Route exact path={'/newPost'} component={NewPost}/>
+        <Route exact path={'/fullPost'} render={() => <FullPost id={this.state.selectedPostId}/>}/>
+        <Route exact path={'/news'} component={News}/>
       </div>
     );
   }

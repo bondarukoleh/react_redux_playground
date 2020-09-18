@@ -5,19 +5,17 @@ import axios from 'axios';
 class FullPost extends Component {
   state = {
     postData: null
-  }
+  };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if(this.props.id !== prevProps.id) {
-      axios.get(`/posts/${this.props.id}`)
-        .then((result) => this.setState({postData: result.data}));
-    }
+  componentDidMount() {
+    axios.get(`/posts/${this.props.id}`)
+      .then((result) => this.setState({postData: result.data}));
   }
 
   deletePost = () => {
     axios.delete(`/posts/${this.props.id}`)
-      .then((result) => console.log(result))
-  }
+      .then((result) => console.log(result));
+  };
 
   render() {
     let post = <p style={{textAlign: "center"}}>Please select a Post!</p>;
