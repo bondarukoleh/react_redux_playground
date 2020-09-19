@@ -3,7 +3,7 @@ import NewPost from './NewPost/NewPost';
 import './Blog.css';
 import Posts from "./Posts/Posts";
 import FullPost from "./FullPost/FullPost";
-import {Route, Link} from 'react-router-dom';
+import {Route, Link, withRouter} from 'react-router-dom';
 import News from "../News/News";
 
 class Blog extends Component {

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import styles from './Posts.module.scss';
 import Post from "../../../components/Post/Post";
 import axios from "axios";
+import {withRouter} from 'react-router-dom'
 
 class Posts extends Component {
   state = {
@@ -28,6 +29,7 @@ class Posts extends Component {
   };
 
   render() {
+    console.log("POSTS", this.props)
     return (
       <React.Fragment>
         <section className={styles.Posts}>
@@ -38,4 +40,4 @@ class Posts extends Component {
   }
 }
 
-export default Posts;
+export default withRouter(Posts);
