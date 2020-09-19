@@ -4,7 +4,7 @@ import './Post.css';
 
 const Post = (props) => {
   return (<article className="Post">
-      <Link to={'/fullPost'} onClick={props.clicked}>
+      <Link to={`/fullPost/${props.id}`}>
         <h1>{props.title}</h1>
         <div className="Info">
           <div className="Author">{props.author}</div>

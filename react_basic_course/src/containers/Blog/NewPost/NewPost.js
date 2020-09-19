@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import './NewPost.css';
+import {withRouter} from 'react-router-dom';
 
 class NewPost extends Component {
   state = {
@@ -45,4 +46,4 @@ class NewPost extends Component {
   }
 }
 
-export default NewPost;
+export default withRouter(NewPost);
