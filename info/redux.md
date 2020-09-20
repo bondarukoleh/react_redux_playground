@@ -174,12 +174,22 @@ export default withRouter(MyComponent); // Now, ANY way you would wrap this Comp
 In route path `path={/:something}` - means dynamically value.
 ```jsx
 /* This in the parent */
-<Route exact path={'/fullPost/:someId'} component={FullPost}/>
+<Route exact path={'/:someId'} component={FullPost}/>
 /* I will redirect someone here */
-<Link to={`/fullPost/${props.somePassedId}`} onClick={props.clicked}>
+<Link to={`/${props.somePassedId}`} onClick={props.clicked}>
 {/* In showed element I can extract id from */}
 <p>{`Id of element ${this.props.match.params.someId}`}</p>
 ```
+`BrowserRouter` that wraps `Router` - will match the current url with Routes it has to show one by one, and everything
+that machs the path - it will show. So sometimes you can see a few components that isn't supposed to be together. \ 
+The `<Switch/>` component will only render the first route that matches/includes the path.
+```jsx
+<Switch>
+  <Route exact path={'/goods/:id'}><MyComponent/></Route>
+  <Route exact path={'/goods'}><MyComponent/><Route/>  {/* You won't have one good over all goods here */}
+</Switch>
+```
+Of course, you can MIX Switch with the BrowserRouter, not a problem. 
 
 ### Link
 `a vs Link (from React Router)` \
@@ -191,6 +201,8 @@ application*. There nice features of [Link][5]
 <Link to="/news">News</Link>
 <Link to={{pathname: "/news", search: "?sort=name", hash: "#the-hash",}}>News</Link>
 ```
+
+#### Path
 The path you can use in Link's `to` can be either absolute or relative. \
 **Absolute Path** - default, if you just enter to="/some-path" or to="some-path", that's absolute path, means it's
 always appended right after your domain, both syntax (with and without leading slash) lead to `example.com/some-path`. \
@@ -211,6 +223,35 @@ Use relative paths if you want to navigate relative to your existing path.
  to="/"
  exact
 >Home</NavLink>
+```
+
+#### Parameters    
+```jsx
+<Link to="/my-path?start=5">Go to Start</Link>
+/* Or */
+<Link 
+    to={{
+        pathname: '/my-path',
+        search: '?start=5',
+        hash: 'start-position'
+    }}
+    >Go to Start</Link>
+```
+You can get URL parameters **string** from `props.location.search` will give you ***?start=5***, or `props.location.hash`;
+To parse it use:
+```jsx
+const query = new URLSearchParams(this.props.location.search);
+for (const [key, value] of queries.entries()) {
+  console.log(key, value); // 'start', '5'. This is the way get them.
+}
+```
+
+#### Navigation programmatically
+We can navigate to something by Link, or we can you `props.history` object. That contains some functions, like `goBack`, 
+`goForward`, and `push`. Navigation history is like a stack, it has list of visited paths, that's why you can navigate
+forward and back. Push method - pushes another link to this stack, so you navigate to it.
+```jsx
+<h1 onClick={() => props.history.push(`/${props.id}`)}>{props.title}</h1>
 ```
 
 `Redux Form` - helping to add complicated logic form to app, it has its own reducer, so we don't need to add a lot of
