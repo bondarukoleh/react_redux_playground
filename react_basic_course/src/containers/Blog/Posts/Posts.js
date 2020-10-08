@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import styles from './Posts.module.scss';
 import Post from "../../../components/Post/Post";
 import axios from "axios";
-import {withRouter} from 'react-router-dom'
+import {Route, withRouter} from 'react-router-dom';
+import FullPost from '../FullPost/FullPost';
 
 class Posts extends Component {
   state = {
@@ -29,7 +30,6 @@ class Posts extends Component {
   };
 
   render() {
-    console.log("POSTS", this.props)
     return (
       <React.Fragment>
         <section className={styles.Posts}>
