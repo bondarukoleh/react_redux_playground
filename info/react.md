@@ -280,3 +280,97 @@ Export
 * export default A
 * export const A
 * export {A}
+
+### <Redirect>
+from react router dom will navigate to a new location. The new location **will override the current location** in the
+history stack, like server-side redirects (HTTP 3xx) do. So when you press the back button - you'll be on the same page.
+
+```jsx
+<Route exact path="/">
+  {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
+  {/* If you need user to has ability to come back - use push */}
+  {loggedIn ? this.props.history.push('/dashboard')}
+  {/* Also history has same method with replace behavior */ }
+  {loggedIn ? this.props.history.replace('/dashboard')}
+</Route>
+```
+
+### Guard
+Some of our component you wish user can see only if he is authenticated. So you'll render components conditionally. 
+
+### 404
+If you have unknown path requested, you want to show your 404 page. You can do this by adding route without path, 
+should be last in switch.
+```jsx
+<Route render={() => <h1> We don't know how you get here. </h1>}/>
+```
+
+## Lazy loading component.
+When user reaches the application it loads the bundle. Bundle contains all the code, components, and all the
+application. But it is not necessary sometimes to download all the code, we can separate them in chunks. So we can load the code only for components user
+requesting. 
+ 
+ 
+ ```jsx
+const asyncComponent = (importComponent) => {
+  return (props) => {
+    const [state, setState] = useState({component: null});
+
+    useEffect(() => {
+      importComponent().then(loadedComponent => {
+        setState({component: loadedComponent.default})
+      })
+    }, [])
+
+    const Component = state.component;
+    return state.component ? <Component {...props}/> : null;
+  };
+};
+
+const AsyncNewPosts = asyncComponent(() => import('../../components/NewPost/NewPost'));
+
+render() {
+  <Route path={'/newPost'} component={AsyncNewPosts}/>
+}
+```
+
+### React.lazy
+Same feature, but out of the box.
+```jsx
+const AsyncNewPosts = React.lazy(() => import('../../components/NewPost/NewPost'));
+```
+Also useful component Suspense.
+```jsx
+import React, { Suspense } from 'react';
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+
+function MyComponent() {
+  return (
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route component={OtherComponent}/>
+        </Switch>  
+      </Suspense>
+    </div>
+  );
+}
+```
+
+## BasePath for React
+Client -> server -> React. When User reaches your application, first he reaches server, and then server should return index.html with react code that knows about the route user wanted. /
+It's ok if you host on //my-app.com, base path is /. /
+But what if you host on //my-server.com/my-app ?
+```jsx
+class App extends React.Component {
+  render() {
+    return (
+        <BrowserRouter basename='/my-app' {/* default is '/' */}>
+          <Blog/>
+        </BrowserRouter>
+    );
+  }
+}
+
+export default App;
+```

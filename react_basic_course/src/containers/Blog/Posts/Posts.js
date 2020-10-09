@@ -3,7 +3,7 @@ import styles from './Posts.module.scss';
 import Post from "../../../components/Post/Post";
 import axios from "axios";
 import {Route, withRouter} from 'react-router-dom';
-import FullPost from '../FullPost/FullPost';
+import FullPost from '../../../components/FullPost/FullPost';
 
 class Posts extends Component {
   state = {
@@ -35,7 +35,7 @@ class Posts extends Component {
         <section className={styles.Posts}>
           {this.renderPosts()}
         </section>
-        <Route exact path={`/:id`} component={FullPost}/>
+        <Route exact path={`${this.props.match.url}/:id`} component={FullPost}/>
       </React.Fragment>
     );
   }

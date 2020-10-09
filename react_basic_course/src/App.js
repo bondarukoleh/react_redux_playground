@@ -6,11 +6,9 @@ import {BrowserRouter} from 'react-router-dom';
 class App extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        <BrowserRouter>
-          <Blog/>
-        </BrowserRouter>
-      </React.Fragment>
+      <BrowserRouter>
+        <Blog/>
+      </BrowserRouter>
     );
   }
 }

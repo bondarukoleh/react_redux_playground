@@ -4,20 +4,16 @@ import axios from 'axios';
 
 const FullPost = ({match}) => {
   const [contentState, setContent] = useState({postData: null});
-  useEffect(() => getPostData(), [match.params.id]);
-
-  const getPostData = () => {
+  useEffect(() => {
     axios.get(`/posts/${match.params.id}`)
       .then((result) => setContent({postData: result.data}));
-  };
+  }, [match.params.id]);
 
   const deletePost = () => {
     axios.delete(`/posts/${match.params.id}`)
       .then((result) => console.log(result));
   };
 
-  console.log('From Full post');
-  console.log(match.params.id);
   let post = <p style={{textAlign: "center"}}>Couldn't get this Post!</p>;
   if (match.params.id) {
     post = <p style={{textAlign: "center"}}>Loading...</p>;

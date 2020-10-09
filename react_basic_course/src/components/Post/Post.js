@@ -4,7 +4,7 @@ import './Post.css';
 
 const Post = (props) => {
   return (<article className="Post">
-      <Link to={`/${props.id}`}>
+      <Link to={`${props.match.url}/${props.id}`}>
         <h1>{props.title}</h1>
         <div className="Info">
           <div className="Author">{props.author}</div>
