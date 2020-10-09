@@ -35,6 +35,7 @@ class Posts extends Component {
         <section className={styles.Posts}>
           {this.renderPosts()}
         </section>
+        <Route exact path={`/:id`} component={FullPost}/>
       </React.Fragment>
     );
   }

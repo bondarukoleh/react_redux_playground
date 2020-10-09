@@ -1,42 +1,39 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import './FullPost.css';
 import axios from 'axios';
-import {withRouter} from 'react-router-dom';
 
-class FullPost extends Component {
-  state = {
-    postData: null,
-    id: this.props.match.params.id
+const FullPost = ({match}) => {
+  const [contentState, setContent] = useState({postData: null});
+  useEffect(() => getPostData(), [match.params.id]);
+
+  const getPostData = () => {
+    axios.get(`/posts/${match.params.id}`)
+      .then((result) => setContent({postData: result.data}));
   };
 
-  componentDidMount() {
-    axios.get(`/posts/${this.state.id}`)
-      .then((result) => this.setState({postData: result.data}));
-  }
-
-  deletePost = () => {
-    axios.delete(`/posts/${this.state.id}`)
+  const deletePost = () => {
+    axios.delete(`/posts/${match.params.id}`)
       .then((result) => console.log(result));
   };
 
-  render() {
-    let post = <p style={{textAlign: "center"}}>Couldn't get this Post!</p>;
-    if (this.props.id) {
-      post = <p style={{textAlign: "center"}}>Loading...</p>;
-    }
-    if (this.state.postData) {
-      post = (
-        <div className="FullPost">
-          <h1>{this.state.postData.title}</h1>
-          <p>{this.state.postData.body}</p>
-          <div className="Edit">
-            <button onClick={this.deletePost} className="Delete">Delete</button>
-          </div>
-        </div>
-      );
-    }
-    return post;
+  console.log('From Full post');
+  console.log(match.params.id);
+  let post = <p style={{textAlign: "center"}}>Couldn't get this Post!</p>;
+  if (match.params.id) {
+    post = <p style={{textAlign: "center"}}>Loading...</p>;
   }
-}
+  if (contentState.postData) {
+    post = (
+      <div className="FullPost">
+        <h1>{contentState.postData.title}</h1>
+        <p>{contentState.postData.body}</p>
+        <div className="Edit">
+          <button onClick={deletePost} className="Delete">Delete</button>
+        </div>
+      </div>
+    );
+  }
+  return post;
+};
 
-export default withRouter(FullPost);
+export default FullPost;
