@@ -281,6 +281,9 @@ Export
 * export const A
 * export {A}
 
+### <Route>
+Component that directly rendered in Route - has access to match, history, etc.
+
 ### <Redirect>
 from react router dom will navigate to a new location. The new location **will override the current location** in the
 history stack, like server-side redirects (HTTP 3xx) do. So when you press the back button - you'll be on the same page.
